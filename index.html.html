@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endemik Accompagnements & Conseils — Montée en compétences numérique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0A0A0A;
+    --white: #F8F6F1;
+    --accent: #00E5A0;
+    --accent2: #FF4D6D;
+    --mid: #1A1A2E;
+    --gray: #8B8D99;
+    --border: rgba(255,255,255,0.08);
+    --card-bg: #111118;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: 'Space Mono', monospace; }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.6rem 1.4rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--white); display: block; transition: all 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 5% 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,229,160,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,77,109,0.08) 0%, transparent 70%);
+    bottom: 50px; left: -50px;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(0,229,160,0.3);
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    max-width: 900px;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero h1 .strike {
+    position: relative; display: inline-block;
+  }
+  .hero h1 .strike::after {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 100%; height: 3px;
+    background: var(--accent2);
+    transform: translateY(-50%);
+  }
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--gray);
+    max-width: 560px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats {
+    display: flex; gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .stat-item {}
+  .stat-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .stat-number span { color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
+
+  /* SECTION BASE */
+  section { padding: 6rem 5%; }
+  .section-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    color: var(--gray);
+    max-width: 540px;
+    font-weight: 300;
+    font-size: 1.05rem;
+  }
+  .section-header { margin-bottom: 4rem; }
+
+  /* PUBLICS */
+  .publics { background: var(--card-bg); }
+  .publics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .public-card {
+    padding: 2.5rem 2rem;
+    background: var(--card-bg);
+    border-right: 1px solid var(--border);
+    transition: background 0.3s;
+    cursor: default;
+  }
+  .public-card:last-child { border-right: none; }
+  .public-card:hover { background: #16161F; }
+  .public-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .public-card h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+  }
+  .public-card p { font-size: 0.875rem; color: var(--gray); line-height: 1.6; }
+
+  /* PRESTATIONS */
+  .prestations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .presta-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .presta-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .presta-card.featured { border-color: var(--accent); }
+  .presta-card.featured::before {
+    content: 'POPULAIRE';
+    position: absolute; top: 1rem; right: 1rem;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    letter-spacing: 1px;
+  }
+  .presta-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+  .presta-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+  }
+  .presta-card p { font-size: 0.875rem; color: var(--gray); margin-bottom: 1.5rem; }
+  .presta-features { list-style: none; margin-bottom: 2rem; }
+  .presta-features li {
+    font-size: 0.85rem;
+    color: var(--gray);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .presta-features li::before { content: '→'; color: var(--accent); font-size: 0.8rem; }
+  .presta-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  .presta-price span { font-size: 0.8rem; color: var(--gray); font-weight: 400; }
+  .btn-card {
+    width: 100%;
+    padding: 0.875rem;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+  .btn-card:hover { background: var(--accent); color: var(--black); }
+  .btn-card-filled {
+    width: 100%;
+    padding: 0.875rem;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+  }
+  .btn-card-filled:hover { opacity: 0.85; }
+
+  /* MÉTHODE */
+  .methode { background: var(--card-bg); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 2.5rem; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .step {
+    padding: 0 2rem 2rem 0;
+    position: relative;
+  }
+  .step-num {
+    width: 48px; height: 48px;
+    border: 1px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    background: var(--card-bg);
+    position: relative; z-index: 1;
+  }
+  .step h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+  .step p { font-size: 0.875rem; color: var(--gray); }
+
+  /* TEMOIGNAGES */
+  .temoignages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .temoignage {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+  }
+  .temoignage-quote {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+    font-weight: 300;
+  }
+  .temoignage-quote::before { content: '"'; color: var(--accent); font-size: 2rem; line-height: 0; vertical-align: -0.5rem; margin-right: 4px; font-family: 'Space Mono', monospace; }
+  .temoignage-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar {
+    width: 40px; height: 40px;
+    background: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--black);
+    flex-shrink: 0;
+  }
+  .author-name { font-size: 0.875rem; font-weight: 600; }
+  .author-role { font-size: 0.75rem; color: var(--gray); }
+  .stars { color: var(--accent); font-size: 0.75rem; margin-bottom: 0.25rem; }
+
+  /* FAQ */
+  .faq { background: var(--card-bg); }
+  .faq-list { max-width: 760px; }
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .faq-question {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+    gap: 1rem;
+  }
+  .faq-question:hover { color: var(--accent); }
+  .faq-toggle {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s;
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+  .faq-answer.open {
+    max-height: 300px;
+    padding-bottom: 1.5rem;
+  }
+  .faq-toggle.open { transform: rotate(45deg); }
+
+  /* CONTACT */
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .contact-info h2 { margin-bottom: 1rem; }
+  .contact-info p { color: var(--gray); font-size: 0.95rem; margin-bottom: 2rem; }
+  .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.875rem;
+  }
+  .contact-item-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.875rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    resize: vertical;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--accent); }
+  .form-group select { cursor: pointer; }
+  .form-group select option { background: var(--card-bg); }
+  .btn-submit {
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+  }
+  .btn-submit:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    padding: 3rem 5%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .footer-brand {}
+  .footer-logo {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-tagline { font-size: 0.8rem; color: var(--gray); max-width: 240px; }
+  .footer-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-links a {
+    font-size: 0.875rem;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom {
+    padding: 1.5rem 5%;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.75rem;
+    color: var(--gray);
+    background: var(--card-bg);
+  }
+
+  /* ANIMATION SCROLL */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: none; }
+
+  /* MODALE */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    align-items: flex-start;
+    justify-content: center;
+    padding: 4rem 1rem;
+    overflow-y: auto;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    max-width: 740px;
+    width: 100%;
+    padding: 3rem;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: none; border: 1px solid var(--border);
+    color: var(--gray); cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { border-color: var(--accent2); color: var(--accent2); }
+  .modal-box h2 { font-size: 1.4rem; letter-spacing: -1px; margin-bottom: 2rem; }
+  .modal-box h3 { font-size: 0.9rem; color: var(--accent); margin: 1.5rem 0 0.5rem; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+  .modal-box p { font-size: 0.875rem; color: var(--gray); line-height: 1.7; margin-bottom: 0.75rem; }
+  .modal-box ul { list-style: none; margin-bottom: 0.75rem; }
+  .modal-box ul li { font-size: 0.875rem; color: var(--gray); padding: 0.2rem 0; }
+  .modal-box ul li::before { content: '— '; color: var(--accent); }
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 1rem 1.5rem;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s;
+  }
+  .toast.show { transform: none; opacity: 1; }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--black);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .mobile-menu a:hover { color: var(--accent); }
+  .mobile-close {
+    position: absolute; top: 1.5rem; right: 5%;
+    background: none; border: none; cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    font-size: 1.5rem;
+    color: var(--white);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .steps::before { display: none; }
+    #apropos > div:last-child { grid-template-columns: 1fr !important; }
+    .modal-box { padding: 2rem 1.25rem; }
+  }
+  @media (max-width: 600px) {
+    footer { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .nav-cta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">ENDEMIK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#publics">Publics</a></li>
+    <li><a href="#prestations">Prestations</a></li>
+    <li><a href="#methode">Méthode</a></li>
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#temoignages">Témoignages</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Nous contacter →</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMenu()">✕</button>
+  <a href="#publics" onclick="toggleMenu()">Publics</a>
+  <a href="#prestations" onclick="toggleMenu()">Prestations</a>
+  <a href="#methode" onclick="toggleMenu()">Méthode</a>
+  <a href="#temoignages" onclick="toggleMenu()">Témoignages</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-badge">ACCOMPAGNEMENTS & CONSEILS NUMÉRIQUES</div>
+
+  <h1>
+    Le numérique,<br>
+    <span class="accent">maîtrisé</span> par tous.
+  </h1>
+
+  <p class="hero-sub">
+    Endemik accompagne particuliers, professionnels et organisations dans leur montée en compétences digitales. Formations sur mesure, conseils stratégiques, résultats concrets.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#prestations" class="btn-primary">Découvrir nos prestations →</a>
+    <a href="#contact" class="btn-outline">Diagnostic gratuit</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">+<span>400</span></div>
+      <div class="stat-label">Personnes accompagnées</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span>9.6</span>/10</div>
+      <div class="stat-label">Note de satisfaction</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span>750</span></div>
+      <div class="stat-label">Points Pix validés</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span>5</span> ans</div>
+      <div class="stat-label">Conseiller numérique</div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICS -->
+<section class="publics" id="publics">
+  <div class="section-header fade-in">
+    <div class="section-tag">// Pour qui ?</div>
+    <h2 class="section-title">Un accompagnement<br>pour chaque profil</h2>
+    <p class="section-sub">Que vous soyez novice ou initié, nous adaptons notre pédagogie à votre réalité.</p>
+  </div>
+  <div class="publics-grid fade-in">
+    <div class="public-card">
+      <span class="public-icon">👤</span>
+      <h3>Particuliers</h3>
+      <p>Apprenez à naviguer, communiquer, acheter et vous protéger en ligne, à votre rythme et sans jargon technique.</p>
+    </div>
+    <div class="public-card">
+      <span class="public-icon">👴</span>
+      <h3>Seniors</h3>
+      <p>Découvrez le numérique en toute sécurité : smartphone, réseaux sociaux, démarches administratives en ligne.</p>
+    </div>
+    <div class="public-card">
+      <span class="public-icon">💼</span>
+      <h3>Professionnels & TPE</h3>
+      <p>Boostez votre productivité, développez votre présence en ligne et digitalisez vos processus métiers.</p>
+    </div>
+    <div class="public-card">
+      <span class="public-icon">🏛️</span>
+      <h3>Associations & collectivités</h3>
+      <p>Outillez vos équipes et bénévoles pour une communication digitale efficace et une gestion modernisée.</p>
+    </div>
+    <div class="public-card">
+      <span class="public-icon">🎓</span>
+      <h3>Demandeurs d'emploi</h3>
+      <p>Maîtrisez les outils numériques pour optimiser votre recherche d'emploi et vous démarquer sur le marché.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRESTATIONS -->
+<section id="prestations">
+  <div class="section-header fade-in">
+    <div class="section-tag">// Nos prestations</div>
+    <h2 class="section-title">Des solutions claires,<br>des résultats mesurables</h2>
+    <p class="section-sub">Toutes nos formations sont certifiées et peuvent être financées via des dispositifs de formation professionnelle.</p>
+  </div>
+  <div class="prestations-grid fade-in">
+
+    <div class="presta-card">
+      <div class="presta-number">01 — FORMATION</div>
+      <h3>Initiation au numérique</h3>
+      <p>Pour partir de zéro et acquérir les bases essentielles du digital au quotidien.</p>
+      <ul class="presta-features">
+        <li>Utilisation d'un ordinateur / smartphone</li>
+        <li>Navigation sécurisée sur internet</li>
+        <li>Messagerie &amp; réseaux sociaux</li>
+        <li>Démarches administratives en ligne</li>
+        <li>Sécurité &amp; protection des données</li>
+      </ul>
+      <div class="presta-price">Dès 25€ <span>/ heure</span></div>
+      <a href="#contact" class="btn-card">Je m'inscris →</a>
+    </div>
+
+    <div class="presta-card featured">
+      <div class="presta-number">02 — FORMATION</div>
+      <h3>Outils bureautiques &amp; IA</h3>
+      <p>Maîtrisez les outils incontournables pour travailler efficacement à l'ère de l'intelligence artificielle.</p>
+      <ul class="presta-features">
+        <li>Suite Office / Google Workspace</li>
+        <li>Tableurs &amp; présentations avancées</li>
+        <li>Introduction à l'IA (ChatGPT, Copilot…)</li>
+        <li>Automatisation de tâches répétitives</li>
+        <li>Collaboration en ligne</li>
+      </ul>
+      <div class="presta-price">Dès 45€ <span>/ heure</span></div>
+      <a href="#contact" class="btn-card-filled">Je m'inscris →</a>
+    </div>
+
+    <div class="presta-card">
+      <div class="presta-number">03 — FORMATION</div>
+      <h3>Présence &amp; marketing digital</h3>
+      <p>Créez et développez votre visibilité en ligne pour attirer clients et partenaires.</p>
+      <ul class="presta-features">
+        <li>Création de site internet (no-code)</li>
+        <li>Réseaux sociaux professionnels</li>
+        <li>Google My Business &amp; référencement</li>
+        <li>Emailing &amp; newsletter</li>
+        <li>Analyse des performances</li>
+      </ul>
+      <div class="presta-price">Dès 60€ <span>/ heure</span></div>
+      <a href="#contact" class="btn-card">Je m'inscris →</a>
+    </div>
+
+    <div class="presta-card">
+      <div class="presta-number">04 — CONSEIL</div>
+      <h3>Audit &amp; stratégie numérique</h3>
+      <p>Un diagnostic complet de votre maturité digitale et un plan d'action personnalisé.</p>
+      <ul class="presta-features">
+        <li>Audit de votre présence en ligne</li>
+        <li>Analyse des outils utilisés</li>
+        <li>Recommandations priorisées</li>
+        <li>Feuille de route sur 6–12 mois</li>
+        <li>Suivi trimestriel</li>
+      </ul>
+      <div class="presta-price">Dès 80€ <span>/ heure</span></div>
+      <a href="#contact" class="btn-card">En savoir plus →</a>
+    </div>
+
+    <div class="presta-card">
+      <div class="presta-number">05 — ACCOMPAGNEMENT</div>
+      <h3>Coaching individuel</h3>
+      <p>Un accompagnement 1-to-1 ultra-personnalisé selon vos objectifs et votre emploi du temps.</p>
+      <ul class="presta-features">
+        <li>Séances en présentiel ou distanciel</li>
+        <li>Programme 100% adapté</li>
+        <li>Disponibilité flexible</li>
+        <li>Suivi des progrès</li>
+        <li>Ressources pédagogiques offertes</li>
+      </ul>
+      <div class="presta-price">25€ – 120€ <span>/ heure</span></div>
+      <a href="#contact" class="btn-card">Réserver une séance →</a>
+    </div>
+
+    <div class="presta-card">
+      <div class="presta-number">06 — ENTREPRISE</div>
+      <h3>Formation en entreprise</h3>
+      <p>Des sessions intra-entreprise sur mesure pour digitaliser vos équipes rapidement et efficacement.</p>
+      <ul class="presta-features">
+        <li>Analyse des besoins en amont</li>
+        <li>Programme co-construit</li>
+        <li>Formateur dédié</li>
+        <li>Formation en groupe ou individuelle</li>
+        <li>Certificats de formation fournis</li>
+      </ul>
+      <div class="presta-price">Sur devis</div>
+      <a href="#contact" class="btn-card">Demander un devis →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- METHODE -->
+<section class="methode" id="methode">
+  <div class="section-header fade-in">
+    <div class="section-tag">// Notre méthode</div>
+    <h2 class="section-title">Simple, concret,<br>immédiatement utile</h2>
+    <p class="section-sub">Une approche pédagogique pensée pour que chaque heure de formation se traduise en compétences réelles.</p>
+  </div>
+  <div class="steps fade-in">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Diagnostic initial</h3>
+      <p>On évalue votre niveau, vos besoins et vos objectifs lors d'un entretien gratuit de 30 minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Programme personnalisé</h3>
+      <p>Un parcours sur mesure est construit en fonction de votre profil, de vos contraintes et de vos ambitions.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Formation active</h3>
+      <p>Des sessions 100% pratiques, avec des cas concrets tirés de votre contexte réel, sans théorie superflue.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Ancrage & suivi</h3>
+      <p>Des ressources, des exercices et un suivi post-formation pour s'assurer que les compétences durent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- A PROPOS -->
+<section id="apropos" style="background: var(--black);">
+  <div class="section-header fade-in">
+    <div class="section-tag">// À propos</div>
+    <h2 class="section-title">Un parcours ancré<br>dans le terrain</h2>
+    <p class="section-sub">Passionné de numérique depuis l'enfance, formateur de conviction, médiateur de proximité — voici l'histoire d'Endemik.</p>
+  </div>
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;" class="fade-in">
+    <div>
+      <div style="display: flex; flex-direction: column; gap: 2rem;">
+
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="min-width: 48px; height: 48px; border: 1px solid rgba(0,229,160,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px;">~10</div>
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">Les débuts avec le numérique</h3>
+            <p style="font-size: 0.875rem; color: var(--gray);">Dès l'âge de 10 ans, une passion pour l'informatique et les nouvelles technologies s'installe — bidouillage, découverte des réseaux, curiosité insatiable pour tout ce qui est connecté.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="min-width: 48px; height: 48px; border: 1px solid rgba(0,229,160,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px;">BTS</div>
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">BTS Administration Réseau</h3>
+            <p style="font-size: 0.875rem; color: var(--gray);">Une formation technique solide en administration des systèmes et réseaux informatiques, base d'une expertise pluridisciplinaire dans l'écosystème numérique.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="min-width: 48px; height: 48px; border: 1px solid rgba(0,229,160,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px;">DIP.</div>
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">Médiateur numérique en travail social</h3>
+            <p style="font-size: 0.875rem; color: var(--gray);">Un diplôme qui allie compétences techniques et dimension humaine — accompagner les publics fragilisés vers l'inclusion numérique devient une mission centrale.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="min-width: 48px; height: 48px; border: 1px solid rgba(0,229,160,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px;">5 ans</div>
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">Conseiller numérique — terrain</h3>
+            <p style="font-size: 0.875rem; color: var(--gray);">5 ans en tant que Conseiller Numérique à La Réunion et Mayotte : +300 personnes accompagnées, 12 remises à niveau, 36 jeunes en immersion FabLab (impression 3D, gravure laser…), tuteur de 20 volontaires en Service Civique.</p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+          <div style="min-width: 48px; height: 48px; border: 1px solid rgba(0,229,160,0.3); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 1px;">NOW</div>
+          <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.4rem;">Responsable d'espace de médiation numérique</h3>
+            <p style="font-size: 0.875rem; color: var(--gray);">Aujourd'hui à la tête d'un espace de médiation numérique et fondateur d'Endemik Formations &amp; Conseils — pour rendre le numérique accessible à tous, sans exception.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+      <div style="background: var(--card-bg); border: 1px solid var(--border); padding: 2rem;">
+        <div style="font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 1.5rem;">EN CHIFFRES</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+          <div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--white);">300–<span style="color: var(--accent);">350</span></div>
+            <div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">Accompagnements individuels</div>
+          </div>
+          <div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--white);"><span style="color: var(--accent);">36</span></div>
+            <div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">Jeunes en immersion FabLab</div>
+          </div>
+          <div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--white);"><span style="color: var(--accent);">20</span></div>
+            <div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">Volontaires Service Civique tutorés</div>
+          </div>
+          <div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--white);"><span style="color: var(--accent);">12</span></div>
+            <div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">Personnes en remise à niveau</div>
+          </div>
+          <div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--white);"><span style="color: var(--accent);">9.6</span>/10</div>
+            <div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">Note de satisfaction formation</div>
+          </div>
+          <div>
+            <div style="font-family: 'Space Mono', monospace; font-size: 1.6rem; font-weight: 700; color: var(--white);"><span style="color: var(--accent);">750</span></div>
+            <div style="font-size: 0.75rem; color: var(--gray); margin-top: 4px;">Points Pix — tous domaines</div>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--card-bg); border: 1px solid rgba(0,229,160,0.2); padding: 1.5rem;">
+        <div style="font-size: 0.875rem; color: var(--gray); font-style: italic; line-height: 1.8;">"Le numérique ne doit pas être un privilège. Mon engagement : rendre ces compétences accessibles à chaque habitant des DROM-COM, quel que soit son âge, son niveau ou sa situation."</div>
+        <div style="margin-top: 1rem; font-size: 0.8rem; color: var(--accent); font-family: 'Space Mono', monospace;">— Fondateur, Endemik AC</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMOIGNAGES -->
+<section id="temoignages">
+  <div class="section-header fade-in">
+    <div class="section-tag">// Témoignages</div>
+    <h2 class="section-title">Ils ont fait confiance<br>à Endemik</h2>
+  </div>
+  <div class="temoignages-grid fade-in">
+    <div class="temoignage">
+      <div class="stars">★★★★★</div>
+      <p class="temoignage-quote">Grâce à la formation, j'ai pu créer le site de mon restaurant en totale autonomie. En 3 semaines, j'avais mes premières réservations en ligne.</p>
+      <div class="temoignage-author">
+        <div class="author-avatar">MD</div>
+        <div>
+          <div class="author-name">Marie D.</div>
+          <div class="author-role">Restauratrice indépendante</div>
+        </div>
+      </div>
+    </div>
+    <div class="temoignage">
+      <div class="stars">★★★★★</div>
+      <p class="temoignage-quote">À 68 ans, je pensais que les smartphones n'étaient pas pour moi. Aujourd'hui je fais mes courses en ligne et je video-appelle mes petits-enfants chaque semaine.</p>
+      <div class="temoignage-author">
+        <div class="author-avatar">JP</div>
+        <div>
+          <div class="author-name">Jean-Pierre M.</div>
+          <div class="author-role">Retraité, Lyon</div>
+        </div>
+      </div>
+    </div>
+    <div class="temoignage">
+      <div class="stars">★★★★★</div>
+      <p class="temoignage-quote">L'audit stratégique nous a permis d'identifier des inefficacités que nous n'aurions jamais détectées seuls. ROI atteint en moins de 4 mois.</p>
+      <div class="temoignage-author">
+        <div class="author-avatar">SC</div>
+        <div>
+          <div class="author-name">Sophie C.</div>
+          <div class="author-role">Directrice d'association</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-header fade-in">
+    <div class="section-tag">// FAQ</div>
+    <h2 class="section-title">Questions fréquentes</h2>
+  </div>
+  <div class="faq-list fade-in">
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Les formations sont-elles finançables ?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Oui ! Nos formations peuvent être financées via le CPF (Compte Personnel de Formation), les OPCO pour les entreprises, Pôle Emploi / France Travail pour les demandeurs d'emploi, ainsi que les plans de formation des collectivités. Contactez-nous et nous vous guidons dans les démarches.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Les formations se font en présentiel ou à distance ?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Les deux ! Nous proposons des formations en présentiel (dans nos locaux ou directement chez vous / dans votre entreprise) et à distance via des outils de visioconférence. Le format est choisi selon vos préférences et contraintes logistiques.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Quel niveau faut-il avoir pour commencer ?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Aucun prérequis ! Nous accueillons des profils allant de zéro connaissance numérique jusqu'aux utilisateurs souhaitant approfondir des compétences avancées. Notre diagnostic initial permet d'adapter précisément le programme à votre niveau de départ.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Combien de temps dure une formation ?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">La durée varie selon le programme : de 4 heures pour une initiation ciblée, jusqu'à plusieurs semaines pour un parcours complet. Nous nous adaptons à votre disponibilité. Toutes les durées sont précisées sur devis ou lors du diagnostic initial.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Recevra-t-on une attestation de formation ?
+        <span class="faq-toggle">+</span>
+      </div>
+      <div class="faq-answer">Absolument. Un certificat de formation est remis à chaque participant à l'issue du programme, précisant les compétences acquises, la durée et les objectifs pédagogiques atteints. Ce document est reconnu dans le cadre des bilans de compétences et dossiers de financement.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrapper">
+    <div class="contact-info fade-in">
+      <div class="section-tag">// Contact</div>
+      <h2 class="section-title">Parlons de votre projet</h2>
+      <p>Un diagnostic gratuit de 30 minutes pour identifier vos besoins et vous orienter vers la meilleure solution.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <span>endemikFC@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <span>06 93 06 62 45</span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <span>La Réunion &amp; Mayotte — DROM-COM · Interventions à distance (France entière)</span>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <span>Lun–Ven, 9h–18h (heure locale Réunion/Mayotte)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fade-in">
+      <div class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="prenom" placeholder="Marie">
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="nom" placeholder="Dupont">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" placeholder="marie@exemple.com">
+        </div>
+        <div class="form-group">
+          <label>Vous êtes</label>
+          <select id="profil">
+            <option value="">Sélectionnez votre profil</option>
+            <option>Particulier</option>
+            <option>Senior</option>
+            <option>Professionnel / Indépendant</option>
+            <option>TPE / PME</option>
+            <option>Association / Collectivité</option>
+            <option>Demandeur d'emploi</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Prestation souhaitée</label>
+          <select id="prestation">
+            <option value="">Sélectionnez une prestation</option>
+            <option>Initiation au numérique</option>
+            <option>Outils bureautiques & IA</option>
+            <option>Présence & marketing digital</option>
+            <option>Audit & stratégie numérique</option>
+            <option>Coaching individuel</option>
+            <option>Formation en entreprise</option>
+            <option>Je ne sais pas encore</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Votre message</label>
+          <textarea id="message" rows="4" placeholder="Décrivez brièvement votre situation et vos objectifs…"></textarea>
+        </div>
+        <button class="btn-submit" onclick="submitForm()">Envoyer ma demande →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="footer-logo">ENDEMIK<span>.</span></span>
+    <p class="footer-tagline">Accompagnements &amp; Conseils numériques pour tous les publics — La Réunion, Mayotte &amp; France entière.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Prestations</h4>
+    <ul class="footer-links">
+      <li><a href="#prestations">Initiation numérique</a></li>
+      <li><a href="#prestations">Bureautique & IA</a></li>
+      <li><a href="#prestations">Marketing digital</a></li>
+      <li><a href="#prestations">Audit stratégique</a></li>
+      <li><a href="#prestations">Coaching</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Navigation</h4>
+    <ul class="footer-links">
+      <li><a href="#publics">Nos publics</a></li>
+      <li><a href="#methode">Notre méthode</a></li>
+      <li><a href="#temoignages">Témoignages</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Légal</h4>
+    <ul class="footer-links">
+      <li><a href="#" onclick="openModal('modalMentions'); return false;">Mentions légales</a></li>
+      <li><a href="#" onclick="openModal('modalMentions'); return false;">Politique de confidentialité</a></li>
+      <li><a href="#" onclick="openModal('modalCGV'); return false;">CGV</a></li>
+      <li><a href="#contact">Accessibilité</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <span>© 2025 Endemik Accompagnements &amp; Conseils. Tous droits réservés.</span>
+  <span>La Réunion · Mayotte · France entière</span>
+</div>
+
+<!-- MODALE MENTIONS LÉGALES -->
+<div class="modal-overlay" id="modalMentions">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modalMentions')">✕ Fermer</button>
+    <div class="section-tag">// Légal</div>
+    <h2>Mentions légales</h2>
+
+    <h3>01 — ÉDITEUR DU SITE</h3>
+    <p>Raison sociale : Endemik Accompagnements &amp; Conseils<br>
+    Statut : [À compléter — auto-entrepreneur / SARL / association…]<br>
+    SIRET : [À compléter]<br>
+    Adresse : La Réunion / Mayotte — DROM-COM, France<br>
+    Email : endemikFC@gmail.com<br>
+    Téléphone : 06 93 06 62 45</p>
+
+    <h3>02 — DIRECTEUR DE LA PUBLICATION</h3>
+    <p>[Prénom Nom du responsable] — endemikFC@gmail.com</p>
+
+    <h3>03 — HÉBERGEMENT</h3>
+    <p>Hébergeur : [À compléter — OVH / Hostinger / Infomaniak…]<br>
+    Adresse : [Adresse de l'hébergeur]</p>
+
+    <h3>04 — PROPRIÉTÉ INTELLECTUELLE</h3>
+    <p>L'ensemble du contenu de ce site (textes, images, logos, structure) est la propriété exclusive d'Endemik Formations &amp; Conseils. Toute reproduction, représentation, modification ou diffusion, même partielle, est interdite sans autorisation écrite préalable.</p>
+
+    <h3>05 — DONNÉES PERSONNELLES (RGPD)</h3>
+    <p>Les données collectées via le formulaire de contact (nom, prénom, email) sont utilisées uniquement pour répondre à vos demandes. Elles ne sont jamais vendues ni transmises à des tiers. Conformément au RGPD et à la loi Informatique &amp; Libertés, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ces droits : endemikFC@gmail.com.</p>
+
+    <h3>06 — COOKIES</h3>
+    <p>Ce site n'utilise pas de cookies de traçage ou publicitaires. Des cookies techniques strictement nécessaires au bon fonctionnement du site peuvent être déposés.</p>
+
+    <h3>07 — RESPONSABILITÉ</h3>
+    <p>Endemik Formations &amp; Conseils s'efforce de maintenir les informations de ce site à jour et exactes. L'éditeur ne peut être tenu responsable des erreurs ou omissions, ni des dommages résultant de l'utilisation des informations publiées.</p>
+
+    <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--gray); border-top: 1px solid var(--border); padding-top: 1rem;">Dernière mise à jour : 2025 — Document modèle à adapter avec l'aide d'un professionnel juridique.</p>
+  </div>
+</div>
+
+<!-- MODALE CGV -->
+<div class="modal-overlay" id="modalCGV">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('modalCGV')">✕ Fermer</button>
+    <div class="section-tag">// Légal</div>
+    <h2>Conditions Générales de Vente</h2>
+
+    <h3>01 — OBJET</h3>
+    <p>Les présentes CGV régissent les relations contractuelles entre Endemik Formations &amp; Conseils (ci-après "le Prestataire") et toute personne physique ou morale (ci-après "le Client") souhaitant bénéficier de ses services de formation et de conseil numérique.</p>
+
+    <h3>02 — PRESTATIONS</h3>
+    <p>Le Prestataire propose les services suivants :</p>
+    <ul>
+      <li>Formations au numérique (initiation, bureautique, marketing digital…)</li>
+      <li>Coaching et accompagnement individualisé</li>
+      <li>Audit et conseil en stratégie numérique</li>
+      <li>Formations intra-entreprise sur devis</li>
+    </ul>
+
+    <h3>03 — TARIFS</h3>
+    <p>Les tarifs horaires sont compris entre 25€ et 120€ de l'heure selon la prestation, le niveau de complexité et le profil du client. Un devis détaillé est établi avant toute intervention. Les tarifs sont exprimés en euros TTC. [Préciser si assujetti ou non à la TVA selon votre statut.]</p>
+
+    <h3>04 — COMMANDE ET CONFIRMATION</h3>
+    <p>Toute commande est formalisée par un devis signé ou un échange email de confirmation. La prestation débute à réception d'un acompte de 30% ou selon modalités convenues.</p>
+
+    <h3>05 — MODALITÉS DE PAIEMENT</h3>
+    <p>Paiement par virement bancaire, chèque ou espèces (dans les limites légales). En cas de financement (CPF, OPCO, France Travail), les modalités sont adaptées au dispositif concerné. Tout retard de paiement entraîne des pénalités de 1,5 fois le taux d'intérêt légal en vigueur.</p>
+
+    <h3>06 — ANNULATION ET REPORT</h3>
+    <p>Annulation par le Client plus de 72h avant : aucune facturation. Annulation entre 24h et 72h : facturation de 50% de la session. Annulation moins de 24h : facturation de 100%. Le Prestataire se réserve le droit d'annuler une session en cas de force majeure, avec report sans frais.</p>
+
+    <h3>07 — OBLIGATIONS DES PARTIES</h3>
+    <p>Le Prestataire s'engage à dispenser les formations avec professionnalisme et à adapter sa pédagogie au profil du Client. Le Client s'engage à fournir les informations nécessaires à la bonne réalisation de la prestation et à assister aux sessions convenues.</p>
+
+    <h3>08 — CONFIDENTIALITÉ</h3>
+    <p>Les parties s'engagent à garder confidentielles les informations échangées dans le cadre de la prestation. Les supports pédagogiques fournis sont à usage strictement personnel et ne peuvent être reproduits ou redistribués.</p>
+
+    <h3>09 — DROIT APPLICABLE</h3>
+    <p>Les présentes CGV sont soumises au droit français. En cas de litige, les parties s'engagent à rechercher une solution amiable avant tout recours judiciaire. À défaut, le tribunal compétent sera celui du ressort du domicile du Prestataire.</p>
+
+    <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--gray); border-top: 1px solid var(--border); padding-top: 1rem;">Dernière mise à jour : 2025 — Document modèle à adapter avec l'aide d'un professionnel juridique ou d'un organisme comme la CCI de La Réunion.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Message envoyé ! Nous vous répondons sous 24h.</div>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // FAQ
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const toggle = btn.querySelector('.faq-toggle');
+    answer.classList.toggle('open');
+    toggle.classList.toggle('open');
+  }
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Form
+  function submitForm() {
+    const email = document.getElementById('email').value;
+    const prenom = document.getElementById('prenom').value;
+    if (!email || !prenom) {
+      alert('Veuillez remplir au minimum votre prénom et votre email.');
+      return;
+    }
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+    document.getElementById('prenom').value = '';
+    document.getElementById('nom').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+    document.getElementById('profil').value = '';
+    document.getElementById('prestation').value = '';
+  }
+
+  // Modales
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', function(e) {
+      if (e.target === this) closeModal(this.id);
+    });
+  });
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 40) {
+      nav.style.borderBottomColor = 'rgba(0,229,160,0.15)';
+    } else {
+      nav.style.borderBottomColor = 'rgba(255,255,255,0.08)';
+    }
+  });
+</script>
+</body>
+</html>
